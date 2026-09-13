@@ -28,4 +28,4 @@
 # -------------------------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 3.30)
 
-project(MysticCMake VERSION 0.0.1 LANGUAGES NONE)
+project(MFWCMake VERSION 0.0.1 LANGUAGES NONE)
