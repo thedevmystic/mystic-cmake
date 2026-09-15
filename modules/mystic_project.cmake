@@ -190,9 +190,7 @@ function(mystic_project)
   # SPDX_LICENSE was only added to project() in CMake 4.3. On older CMake it would be
   # misread as an extra language name, so only pass it through when it's supported.
   if(${_MYSTIC_PROJECT_PREFIX}_LICENSE)
-    if(CMAKE_VERSION VERSION_LESS "4.3")
-      mystic_message(WARNING "The 'license' field requires CMake 4.3 or newer (running ${CMAKE_VERSION}); it will be ignored.")
-    else()
+    if(CMAKE_VERSION VERSION_GREATER "4.3")
       _mystic_append_project_command("SPDX_LICENSE" "${${_MYSTIC_PROJECT_PREFIX}_LICENSE}" _MYSTIC_PROJECT_ARGUMENTS)
     endif()
   endif()
