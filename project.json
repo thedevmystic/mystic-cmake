@@ -1,0 +1,8 @@
+{
+  "name": "MFW-Cmake",
+  "version": "0.1.0",
+  "description": "CMake project for MFW",
+  "homepage": "https://mystic-framework.github.io/docs/modules/cmake",
+  "languages": ["NONE"],
+  "license": "Apache-2.0"
+}
