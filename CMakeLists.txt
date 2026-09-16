@@ -23,13 +23,15 @@
 # ~ CMake File for Mystic Framework: CMake ~
 # -------------------------------------------------------------------------------------------------
 
-# -------------------------------------------------------------------------------------------------
-# CMake Setup
-# -------------------------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 3.30)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/modules")
 
+# Project setup
 include(mystic_project)
 mystic_project()
 project(${MFW_CMAKE_PROJECT_ARGUMENTS})
+
+# Setup CMake options
+include(mystic_setup_options)
+mystic_setup_options()
