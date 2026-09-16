@@ -27,6 +27,10 @@ cmake_minimum_required(VERSION 3.30)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/modules")
 
+# Display a banner
+include(mystic_ascii_banner)
+mystic_ascii_banner("Mystic FWK: CMake")
+
 # Project setup
 include(mystic_project)
 mystic_project()
