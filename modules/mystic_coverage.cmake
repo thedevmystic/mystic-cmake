@@ -47,7 +47,7 @@ function(mystic_coverage)
 
   # Check if coverage is enabled
   if(NOT ${PROJECT_PREFIX}_ENABLE_COVERAGE)
-    mystic_message(NOTICE "Code coverage is disabled. Skipping coverage setup for targets.")
+    mystic_message(STATUS "Code coverage is disabled. Skipping coverage setup for targets.")
     return()
   endif()
 
@@ -58,7 +58,7 @@ function(mystic_coverage)
       mystic_message(FATAL_ERROR "'${target}' provided in 'mystic_coverage' is not a valid CMake target.")
     endif()
 
-    mystic_message(NOTICE "Adding coverage flags to the following target: ${target}")
+    mystic_message(STATUS "Adding coverage flags to the following target: ${target}")
 
     # Check the compiler and apply appropriate coverage flags
     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
