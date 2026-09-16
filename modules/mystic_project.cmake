@@ -64,14 +64,9 @@
 # --------------------------------------------------------------------------------------------------
 
 include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/helpers.cmake")
 
-macro(_mystic_to_constant_case VARIABLE_NAME OUTPUT_VARIABLE)
-  string(TOUPPER "${VARIABLE_NAME}" ${OUTPUT_VARIABLE})
-  string(REPLACE " " "_" ${OUTPUT_VARIABLE} "${${OUTPUT_VARIABLE}}")
-  string(REPLACE "-" "_" ${OUTPUT_VARIABLE} "${${OUTPUT_VARIABLE}}")
-endmacro()
-
-function(_mystic_project_read_content JSON_CONTENT PREFIX VARIABLE_NAME REQ)
+function(_mystic_project_read_content JSON_CONTENT VARIABLE_NAME REQ)
   # Read the content of the specified variable from the JSON content
   string(JSON VARIABLE_CONTENT ERROR_VARIABLE JSON_ERROR GET "${JSON_CONTENT}" "${VARIABLE_NAME}")
 
