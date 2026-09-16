@@ -71,7 +71,7 @@ macro(_mystic_to_constant_case VARIABLE_NAME OUTPUT_VARIABLE)
   string(REPLACE "-" "_" ${OUTPUT_VARIABLE} "${${OUTPUT_VARIABLE}}")
 endmacro()
 
-function(_mystic_project_read_content JSON_CONTENT VARIABLE_NAME REQ)
+function(_mystic_project_read_content JSON_CONTENT PREFIX VARIABLE_NAME REQ)
   # Read the content of the specified variable from the JSON content
   string(JSON VARIABLE_CONTENT ERROR_VARIABLE JSON_ERROR GET "${JSON_CONTENT}" "${VARIABLE_NAME}")
 
@@ -85,10 +85,13 @@ function(_mystic_project_read_content JSON_CONTENT VARIABLE_NAME REQ)
     return()
   endif()
 
+  # Get prefix if it's already set
+  get_property(_MYSTIC_PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
+
   # Set prefix for the every variable name or prefixes used in Mystic Framework.
   if(VARIABLE_NAME STREQUAL "name" AND NOT _MYSTIC_PROJECT_PREFIX)
     _mystic_to_constant_case("${VARIABLE_CONTENT}" _MYSTIC_PROJECT_PREFIX)
-    set(_MYSTIC_PROJECT_PREFIX "${_MYSTIC_PROJECT_PREFIX}" CACHE INTERNAL "Prefix for the project. It is used by MFW as prefix for all variables in all modules.")
+    set_property(DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX "${_MYSTIC_PROJECT_PREFIX}")
   endif()
 
   # Handle languages field, which is an array of strings. Convert it to a semicolon-separated list for CMake.
@@ -104,6 +107,9 @@ function(_mystic_project_read_content JSON_CONTENT VARIABLE_NAME REQ)
       set(VARIABLE_CONTENT "${LANGUAGES_LIST}")
     endif()
   endif()
+
+  # Re-fetch the prefix in case it was set in this function
+  get_property(_MYSTIC_PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
 
   _mystic_to_constant_case("${VARIABLE_NAME}" VARIABLE_NAME_CONSTANT)
   set("${_MYSTIC_PROJECT_PREFIX}_${VARIABLE_NAME_CONSTANT}" "${VARIABLE_CONTENT}" CACHE INTERNAL "Project ${VARIABLE_NAME}.")
@@ -179,6 +185,9 @@ function(mystic_project)
   _mystic_project_read_content("${PROJECT_JSON_CONTENT}" "languages" FALSE)
   _mystic_project_read_content("${PROJECT_JSON_CONTENT}" "cxx_standard" FALSE)
   _mystic_project_read_content("${PROJECT_JSON_CONTENT}" "license" FALSE)
+
+  # Get the project prefix for use in constructing variable names
+  get_property(_MYSTIC_PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
 
   # Set the project command arguments
   set(_MYSTIC_PROJECT_ARGUMENTS "${${_MYSTIC_PROJECT_PREFIX}_NAME}")
