@@ -63,10 +63,10 @@ function(mystic_setup_options)
   option(${PROJECT_PREFIX}_ENABLE_DOCS       "Build documentation."             ON)
   option(${PROJECT_PREFIX}_ENABLE_EXAMPLES   "Build example programs."          ON)
   option(${PROJECT_PREFIX}_ENABLE_LTO        "Enable Link Time Optimization."   OFF)
-  option(${PROJECT_PREFIX}_ENABLE_LINT       "Enable static code analysis."     OFF) # clang-tidy, clang-format, cppcheck.
-  option(${PROJECT_PREFIX}_ENABLE_NARCH      "Enable host CPU optimization."    OFF) # -march=native
+  option(${PROJECT_PREFIX}_ENABLE_LINT       "Enable static code analysis."     OFF)
+  option(${PROJECT_PREFIX}_ENABLE_NARCH      "Enable host CPU optimization."    OFF)
   option(${PROJECT_PREFIX}_ENABLE_PROFILER   "Enable profiling."                OFF)
-  option(${PROJECT_PREFIX}_ENABLE_SANITIZERS "Enable sanitizers."               OFF) # ASan, UBSan, TSan, MSan.
+  option(${PROJECT_PREFIX}_ENABLE_SANITIZERS "Enable sanitizers."               OFF)
   option(${PROJECT_PREFIX}_ENABLE_TESTING    "Build test suites."               ON)
   option(${PROJECT_PREFIX}_ENABLE_WARNINGS   "Enable strict compiler warnings." OFF)
 
