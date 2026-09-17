@@ -134,7 +134,7 @@ endfunction()
 # Description: This function reads the project.json file and sets the parameters for the project()
 # command. It also sets the C++ standard version if specified in the project.json file.
 # Args:
-#   JSON_PATH: to the project.json file (optional, default is "${CMAKE_SOURCE_DIR}/project.json")
+#   JSON_PATH: to the project.json file (optional, default is "${CMAKE_CURRENT_SOURCE_DIR}/project.json")
 # --------------------------------------------------------------------------------------------------
 function(mystic_project)
   set(options "")
@@ -157,7 +157,7 @@ function(mystic_project)
   if(ARG_JSON_PATH)
     set(PROJECT_JSON_PATH "${ARG_JSON_PATH}")
   else()
-    set(PROJECT_JSON_PATH "${CMAKE_SOURCE_DIR}/project.json")
+    set(PROJECT_JSON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/project.json")
   endif()
 
   # Read the content of the project.json file
