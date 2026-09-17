@@ -23,10 +23,7 @@
 # # Include this module in your CMakeLists.txt file:
 # include(mystic_sanitizers)
 # # Call the mystic_sanitizers function to enable sanitizers:
-# mystic_sanitizers(
-#   SANITIZER <SANITIZER_VARIANT>  # The sanitizer variant (address, undefined, thread, memory)
-#   TARGETS <LIST_OF_TARGETS>      # The list of targets to apply the sanitizer to
-# )
+# mystic_sanitizers(<TARGETS>)
 # --------------------------------------------------------------------------------------------------
 
 include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
@@ -80,47 +77,39 @@ endfunction()
 
 # ---------------------------------------------------------------------------------------------------
 # Function: mystic_sanitizers
-# Description: Enables the specified sanitizer for the given targets.
+# Description: Enables the sanitizer for the given targets.
 # Args:
-#   SANITIZER: The sanitizer variant (address, undefined, thread, memory).
-#   TARGETS: A list of targets to apply the sanitizer to.
+#   ...: List of targets to apply the sanitizer to.
 # ---------------------------------------------------------------------------------------------------
 function(mystic_sanitizers)
-  set(options)
-  set(oneValueArgs "SANITIZER")
-  set(multiValueArgs "TARGETS")
+  # Get project prefix
+  get_property(PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
 
-  cmake_parse_arguments(
-    ARG
-    "${options}"
-    "${oneValueArgs}"
-    "${multiValueArgs}"
-    ${ARGN}
-  )
-
-  if(ARG_UNPARSED_ARGUMENTS)
-    mystic_message(FATAL_ERROR "mystic_sanitizers received unknown arguments: ${ARG_UNPARSED_ARGUMENTS}")
+  # Return early if sanitizers are not enabled
+  if(NOT ${PROJECT_PREFIX}_ENABLE_SANITIZERS)
+    mystic_message(STATUS "Sanitizers are disabled. Skipping sanitizers configuration.")
+    return()
   endif()
 
-  if(NOT ARG_SANITIZER)
-    mystic_message(FATAL_ERROR "mystic_sanitizers: SANITIZER argument is required.")
-  endif()
+  set(SANITIZER "${${PROJECT_PREFIX}_SANITIZER_TYPE}")
 
-  if(NOT ARG_TARGETS)
-    mystic_message(FATAL_ERROR "mystic_sanitizers: TARGETS argument is required.")
-  endif()
+  foreach(target IN LISTS ARGN)
+    # Check if the target is valid
+    if(NOT TARGET ${target})
+      mystic_message(FATAL_ERROR "mystic_sanitizers: Target '${target}' is not a valid CMake target.")
+    endif()
 
-  foreach(target IN LISTS ARG_TARGETS)
-    if(ARG_SANITIZER STREQUAL "address")
+    # Add the appropriate sanitizer flags based on the selected sanitizer
+    if(SANITIZER STREQUAL "address")
       _mystic_add_address_sanitizer(${target})
-    elseif(ARG_SANITIZER STREQUAL "undefined")
+    elseif(SANITIZER STREQUAL "undefined")
       _mystic_add_undefined_sanitizer(${target})
-    elseif(ARG_SANITIZER STREQUAL "thread")
+    elseif(SANITIZER STREQUAL "thread")
       _mystic_add_thread_sanitizer(${target})
-    elseif(ARG_SANITIZER STREQUAL "memory")
+    elseif(SANITIZER STREQUAL "memory")
       _mystic_add_memory_sanitizer(${target})
     else()
-      mystic_message(FATAL_ERROR "mystic_sanitizers: Unknown sanitizer: ${ARG_SANITIZER}. Valid options are: address, undefined, thread, memory.")
+      mystic_message(FATAL_ERROR "mystic_sanitizers: Unknown sanitizer: ${SANITIZER}. Valid options are: address, undefined, thread, memory.")
     endif()
   endforeach()
 endfunction()
