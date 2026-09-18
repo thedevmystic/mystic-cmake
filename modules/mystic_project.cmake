@@ -56,7 +56,6 @@
 #   project() command arguments.
 # - If you specify "name" as "MyProject", then the project() command arguments will be called as:
 #   MYPROJECT_PROJECT_ARGUMENTS.
-# - The "version" field is optional. If not specified, it will be set to "1.0.0" by default.
 # - The "languages" field should be a list of strings, where each string is a valid CMake
 #   language identifier.
 # - The "cxx_standard" field should be a string representing the C++ standard version, such as
@@ -117,7 +116,7 @@ function(_mystic_project_read_content JSON_CONTENT VARIABLE_NAME REQ)
   get_property(_MYSTIC_PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
 
   _mystic_to_constant_case("${VARIABLE_NAME}" VARIABLE_NAME_CONSTANT)
-  set("${_MYSTIC_PROJECT_PREFIX}_${VARIABLE_NAME_CONSTANT}" "${VARIABLE_CONTENT}" CACHE INTERNAL "Project ${VARIABLE_NAME}.")
+  set("${_MYSTIC_PROJECT_PREFIX}_PROJECT_${VARIABLE_NAME_CONSTANT}" "${VARIABLE_CONTENT}" CACHE INTERNAL "Project ${VARIABLE_NAME}.")
 endfunction()
 
 function(_mystic_append_project_command FIELD CONTENT OUT_VAR)
@@ -195,23 +194,23 @@ function(mystic_project)
   get_property(_MYSTIC_PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
 
   # Set the project command arguments
-  set(_MYSTIC_PROJECT_ARGUMENTS "${${_MYSTIC_PROJECT_PREFIX}_NAME}")
-  _mystic_append_project_command("VERSION" "${${_MYSTIC_PROJECT_PREFIX}_VERSION}" _MYSTIC_PROJECT_ARGUMENTS)
-  _mystic_append_project_command("DESCRIPTION" "${${_MYSTIC_PROJECT_PREFIX}_DESCRIPTION}" _MYSTIC_PROJECT_ARGUMENTS)
-  _mystic_append_project_command("HOMEPAGE_URL" "${${_MYSTIC_PROJECT_PREFIX}_HOMEPAGE}" _MYSTIC_PROJECT_ARGUMENTS)
-  _mystic_append_project_command("LANGUAGES" "${${_MYSTIC_PROJECT_PREFIX}_LANGUAGES}" _MYSTIC_PROJECT_ARGUMENTS)
+  set(_MYSTIC_PROJECT_ARGUMENTS "${${_MYSTIC_PROJECT_PREFIX}_PROJECT_NAME}")
+  _mystic_append_project_command("VERSION" "${${_MYSTIC_PROJECT_PREFIX}_PROJECT_VERSION}" _MYSTIC_PROJECT_ARGUMENTS)
+  _mystic_append_project_command("DESCRIPTION" "${${_MYSTIC_PROJECT_PREFIX}_PROJECT_DESCRIPTION}" _MYSTIC_PROJECT_ARGUMENTS)
+  _mystic_append_project_command("HOMEPAGE_URL" "${${_MYSTIC_PROJECT_PREFIX}_PROJECT_HOMEPAGE}" _MYSTIC_PROJECT_ARGUMENTS)
+  _mystic_append_project_command("LANGUAGES" "${${_MYSTIC_PROJECT_PREFIX}_PROJECT_LANGUAGES}" _MYSTIC_PROJECT_ARGUMENTS)
 
   # SPDX_LICENSE was only added to project() in CMake 4.3. On older CMake it would be
   # misread as an extra language name, so only pass it through when it's supported.
-  if(${_MYSTIC_PROJECT_PREFIX}_LICENSE)
+  if(${_MYSTIC_PROJECT_PREFIX}_PROJECT_LICENSE)
     if(CMAKE_VERSION VERSION_GREATER "4.3")
-      _mystic_append_project_command("SPDX_LICENSE" "${${_MYSTIC_PROJECT_PREFIX}_LICENSE}" _MYSTIC_PROJECT_ARGUMENTS)
+      _mystic_append_project_command("SPDX_LICENSE" "${${_MYSTIC_PROJECT_PREFIX}_PROJECT_LICENSE}" _MYSTIC_PROJECT_ARGUMENTS)
     endif()
   endif()
 
   # Set the C++ standard version if specified in the project.json file
-  if(${_MYSTIC_PROJECT_PREFIX}_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD "${${_MYSTIC_PROJECT_PREFIX}_CXX_STANDARD}")
+  if(${_MYSTIC_PROJECT_PREFIX}_PROJECT_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD "${${_MYSTIC_PROJECT_PREFIX}_PROJECT_CXX_STANDARD}")
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
     set(CMAKE_CXX_EXTENSIONS OFF)
   endif()
