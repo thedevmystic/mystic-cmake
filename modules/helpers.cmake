@@ -19,10 +19,18 @@
 # License: Apache License 2.0
 # --------------------------------------------------------------------------------------------------
 
-# This macro converts a variable name to constant case (uppercase with underscores).
-macro(_mystic_to_constant_case VARIABLE_NAME OUTPUT_VARIABLE)
+# This function converts a variable name to constant case (uppercase with underscores).
+function(_mystic_to_constant_case VARIABLE_NAME OUTPUT_VARIABLE)
   string(TOUPPER "${VARIABLE_NAME}" ${OUTPUT_VARIABLE})
   string(REPLACE " " "_" ${OUTPUT_VARIABLE} "${${OUTPUT_VARIABLE}}")
   string(REPLACE "-" "_" ${OUTPUT_VARIABLE} "${${OUTPUT_VARIABLE}}")
-endmacro()
+  set(${OUTPUT_VARIABLE} "${${OUTPUT_VARIABLE}}" PARENT_SCOPE)
+endfunction()
 
+# This function capitalizes the first letter of a variable name.
+function(_mystic_capitalize_first_letter VARIABLE_NAME OUTPUT_VARIABLE)
+  string(SUBSTRING "${VARIABLE_NAME}" 0 1 FIRST_LETTER)
+  string(SUBSTRING "${VARIABLE_NAME}" 1 -1 REMAINDER)
+  string(TOUPPER "${FIRST_LETTER}" FIRST_LETTER_UPPER)
+  set(${OUTPUT_VARIABLE} "${FIRST_LETTER_UPPER}${REMAINDER}" PARENT_SCOPE)
+endfunction()
