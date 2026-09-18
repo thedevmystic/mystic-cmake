@@ -66,6 +66,20 @@
 include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/helpers.cmake")
 
+# --------------------------------------------------------------------------------------------------
+# Declare _MYSTIC_PROJECT_PREFIX as an INHERITED directory property.
+# --------------------------------------------------------------------------------------------------
+get_property(_MYSTIC_PROJECT_PREFIX_PROPERTY_DEFINED GLOBAL PROPERTY _MYSTIC_PROJECT_PREFIX_PROPERTY_DEFINED)
+if(NOT _MYSTIC_PROJECT_PREFIX_PROPERTY_DEFINED)
+  define_property(DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX INHERITED
+    BRIEF_DOCS "Constant-case name prefix for the current Mystic project."
+    FULL_DOCS "Set by mystic_project() to the CONSTANT_CASE form of the project's name."
+              "It is used as a prefix for all project-related variables and is stored as a directory property."
+              "Inherited so subdirectories can retrieve it without re-declaring it."
+  )
+  set_property(GLOBAL PROPERTY _MYSTIC_PROJECT_PREFIX_PROPERTY_DEFINED TRUE)
+endif()
+
 function(_mystic_project_read_content JSON_CONTENT VARIABLE_NAME REQ)
   # Read the content of the specified variable from the JSON content
   string(JSON VARIABLE_CONTENT ERROR_VARIABLE JSON_ERROR GET "${JSON_CONTENT}" "${VARIABLE_NAME}")
@@ -80,11 +94,7 @@ function(_mystic_project_read_content JSON_CONTENT VARIABLE_NAME REQ)
     return()
   endif()
 
-  # Get prefix if it's already set
-  get_property(_MYSTIC_PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
-
-  # Set prefix for the every variable name or prefixes used in Mystic Framework.
-  if(VARIABLE_NAME STREQUAL "name" AND NOT _MYSTIC_PROJECT_PREFIX)
+  if(VARIABLE_NAME STREQUAL "name")
     _mystic_to_constant_case("${VARIABLE_CONTENT}" _MYSTIC_PROJECT_PREFIX)
     set_property(DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX "${_MYSTIC_PROJECT_PREFIX}")
   endif()
@@ -103,7 +113,7 @@ function(_mystic_project_read_content JSON_CONTENT VARIABLE_NAME REQ)
     endif()
   endif()
 
-  # Re-fetch the prefix in case it was set in this function
+  # Get project prefix
   get_property(_MYSTIC_PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
 
   _mystic_to_constant_case("${VARIABLE_NAME}" VARIABLE_NAME_CONSTANT)
