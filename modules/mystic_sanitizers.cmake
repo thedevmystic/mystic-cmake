@@ -85,6 +85,10 @@ function(mystic_sanitizers)
   # Get project prefix
   get_property(PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
 
+  if(NOT PROJECT_PREFIX)
+    mystic_message(FATAL_ERROR "Project prefix not set. Ensure that 'mystic_project' is called before 'mystic_sanitizers'.")
+  endif()
+
   # Return early if sanitizers are not enabled
   if(NOT ${PROJECT_PREFIX}_ENABLE_SANITIZERS)
     mystic_message(STATUS "Sanitizers are disabled. Skipping sanitizers configuration.")

@@ -38,6 +38,10 @@ function(mystic_setup_options)
   # Get project prefix
   get_property(PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
 
+  if(NOT PROJECT_PREFIX)
+    mystic_message(FATAL_ERROR "Project prefix not set. Ensure that 'mystic_project' is called before 'mystic_setup_options'.")
+  endif()
+
   # Build Type
   # Valid options: Debug, Release, MinSizeRel, RelWithDebInfo.
   set(${PROJECT_PREFIX}_BUILD_TYPE "Release" CACHE STRING "Build type.")
@@ -92,6 +96,10 @@ function(mystic_setup_feature_options)
   # Get project prefix
   get_property(PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
 
+  if(NOT PROJECT_PREFIX)
+    mystic_message(FATAL_ERROR "Project prefix not set. Ensure that 'mystic_project' is called before 'mystic_setup_feature_options'.")
+  endif()
+
   # Feature Toggles
   foreach(FEATURE IN LISTS ARGN)
     _mystic_to_constant_case(FEATURE FEATURE_FORMATTED)
@@ -108,6 +116,10 @@ endfunction()
 function(mystic_setup_third_party_options)
   # Get project prefix
   get_property(PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
+
+  if(NOT PROJECT_PREFIX)
+    mystic_message(FATAL_ERROR "Project prefix not set. Ensure that 'mystic_project' is called before 'mystic_setup_third_party_options'.")
+  endif()
 
   # Toggles for third-party libraries to use system-installed versions.
   option(${PROJECT_PREFIX}_USE_SYSTEM "Use system-installed third-party libraries." OFF)

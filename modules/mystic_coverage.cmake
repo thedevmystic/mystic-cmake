@@ -45,6 +45,10 @@ function(mystic_coverage)
   # Get project prefix
   get_property(PROJECT_PREFIX DIRECTORY PROPERTY _MYSTIC_PROJECT_PREFIX)
 
+  if(NOT PROJECT_PREFIX)
+    mystic_message(FATAL_ERROR "Project prefix not set. Ensure that 'mystic_project' is called before 'mystic_coverage'.")
+  endif()
+
   # Check if coverage is enabled
   if(NOT ${PROJECT_PREFIX}_ENABLE_COVERAGE)
     mystic_message(STATUS "Code coverage is disabled. Skipping coverage setup for targets.")
