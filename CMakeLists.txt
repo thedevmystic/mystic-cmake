@@ -34,7 +34,7 @@ mystic_ascii_banner("Mystic FWK: CMake")
 # Project setup
 include(mystic_project)
 mystic_project()
-project(${MFW_CMAKE_PROJECT_ARGUMENTS})
+project(${MFWCMAKE_PROJECT_ARGUMENTS})
 
 # Setup CMake options
 include(mystic_setup_options)
