@@ -23,6 +23,23 @@
 # Usage:
 # # Include this module in your CMakeLists.txt file:
 # include(mystic_third_party_config)
+# # Use the function to include a third-party dependency:
+# mystic_third_party_config(MyLib
+#   VERSION 1.2.3
+#   GIT_URL https://github.com/username/repo.git
+#   GIT_TAG v1.2.3
+# )
+#
+# If we have to pass build flags to a library define then before using this.
+# set(MY_LIB_TEST OFF CACHE INTERNAL "Turn off my_lib's test suites.")
+# ... other build flags
+#
+# include(mystic_third_party_config)
+# mystic_third_party_config(MyLib
+#   VERSION 1.2.3
+#   GIT_URL https://github.com/username/repo.git
+#   GIT_TAG v1.2.3
+# )
 # --------------------------------------------------------------------------------------------------
 
 include(FetchContent)
