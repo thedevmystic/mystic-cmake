@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_third_party_config.cmake
+# File: MysticThirdPartyConfig.cmake
 # Description: This CMake module is used to include a third-party dependency in the project. It
 # checks for system-installed libraries first (if enabled), and if not found, fetches the library
 # from GitHub using FetchContent.
@@ -22,7 +22,7 @@
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file:
-# include(mystic_third_party_config)
+# include(MysticThirdPartyConfig)
 # # Use the function to include a third-party dependency:
 # mystic_third_party_config(MyLib
 #   VERSION 1.2.3
@@ -34,7 +34,7 @@
 # set(MY_LIB_TEST OFF CACHE INTERNAL "Turn off my_lib's test suites.")
 # ... other build flags
 #
-# include(mystic_third_party_config)
+# include(MysticThirdPartyConfig)
 # mystic_third_party_config(MyLib
 #   VERSION 1.2.3
 #   GIT_URL https://github.com/username/repo.git
@@ -43,8 +43,8 @@
 # --------------------------------------------------------------------------------------------------
 
 include(FetchContent)
-include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
-include("${CMAKE_CURRENT_LIST_DIR}/private_helpers.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/MysticMessage.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/PrivateHelpers.cmake")
 
 # --------------------------------------------------------------------------------------------------
 # Function: mystic_third_party_config

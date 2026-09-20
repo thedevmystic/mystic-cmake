@@ -13,14 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_import_module.cmake
+# File: MysticImportModule.cmake
 # Description: This CMake module is used to import first-party modules from the Mystic Framework.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
 # License: Apache License 2.0
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file:
-# include(mystic_import_module)
+# include(MysticImportModule)
 # # Prepare for import by specifying the module name:
 # mystic_prepare_for_import(<MODULE_NAME>)
 # # Import the module by specifying the module name and optional version:
@@ -32,8 +32,8 @@
 # --------------------------------------------------------------------------------------------------
 
 include(FetchContent)
-include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
-include("${CMAKE_CURRENT_LIST_DIR}/private_helpers.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/MysticMessage.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/PrivateHelpers.cmake")
 
 # Checks if the module name is valid
 function(_mystic_is_valid_module MODULE_NAME)

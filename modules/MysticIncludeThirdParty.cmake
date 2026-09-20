@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_include_third_party.cmake
+# File: MysticIncludeThirdParty.cmake
 # Description: This CMake module is used to include third-party libraries from "third_parties" in
 #              a CMake project.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
@@ -21,12 +21,12 @@
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file:
-# include(mystic_include_third_party)
+# include(MysticIncludeThirdParty)
 # # Call the function to include third-party libraries:
 # mystic_include_third_party()
 # --------------------------------------------------------------------------------------------------
 
-include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/MysticMessage.cmake")
 
 # -------------------------------------------------------------------------------------------------
 # Function: mystic_include_third_party

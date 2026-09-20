@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_message.cmake
+# File: MysticMessage.cmake
 # Description: This CMake module is used to wrap the `message()` function to provide additional
 # functionality and customization options for displaying messages during the configuration process.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
@@ -21,7 +21,7 @@
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file
-# include(mystic_message)
+# include(MysticMessage)
 # # Drop-in replacement for the `message()` function with additional features
 # mystic_message(STATUS "This is a status message.")
 # --------------------------------------------------------------------------------------------------

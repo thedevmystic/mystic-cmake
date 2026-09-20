@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_install.cmake
+# File: MysticInstall.cmake
 # Description: This CMake module is used to simplify the process of installing files and directories
 #              in a CMake project.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
@@ -21,14 +21,14 @@
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file:
-# include(mystic_install)
+# include(MysticInstall)
 # # Then use the provided functions to install files and directories:
 # mystic_install(<MAIN_TARGET>)
 # --------------------------------------------------------------------------------------------------
 
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
-include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/MysticMessage.cmake")
 
 # --------------------------------------------------------------------------------------------------
 # Function: mystic_install

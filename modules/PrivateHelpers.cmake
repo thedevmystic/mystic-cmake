@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: private_helpers.cmake
+# File: PrivateHelpers.cmake
 # Description: This file contains general private helpers.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
 # License: Apache License 2.0

@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_test.cmake
+# File: MysticTest.cmake
 # Description: This CMake module is used to set up testing for a C++ project. It provides
 # functions to add test targets, configure test frameworks, and manage test dependencies.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
@@ -21,7 +21,7 @@
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file:
-# include(mystic_test)
+# include(MysticTest)
 # # Enable testing for your project:
 # mystic_enable_testing()
 # # Now you can add test targets using the provided functions.
@@ -36,7 +36,7 @@
 # --------------------------------------------------------------------------------------------------
 
 include(CTest)
-include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/MysticMessage.cmake")
 
 # This function sets up _MYSTIC_TEST_FRAMEWORK property for the project.
 function(_mystic_setup_test_framework_property)

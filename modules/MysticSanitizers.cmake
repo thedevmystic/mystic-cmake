@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_sanitizers.cmake
+# File: MysticSanitizers.cmake
 # Description: This CMake module is used to enable sanitizers for the project. It provides a
 # function to set the appropriate compiler flags based on the selected sanitizer.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
@@ -21,12 +21,12 @@
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file:
-# include(mystic_sanitizers)
+# include(MysticSanitizers)
 # # Call the mystic_sanitizers function to enable sanitizers:
 # mystic_sanitizers(<TARGETS>)
 # --------------------------------------------------------------------------------------------------
 
-include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/MysticMessage.cmake")
 
 # Helper functions to add the appropriate sanitizer flags
 function(_mystic_add_address_sanitizer target)

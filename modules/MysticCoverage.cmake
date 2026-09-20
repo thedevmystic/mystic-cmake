@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_coverage.cmake
+# File: MysticCoverage.cmake
 # Description: This CMake module is used to set up code coverage options for a CMake project. It
 # provides a function to enable code coverage flags and settings for supported compilers.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
@@ -21,12 +21,12 @@
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file:
-# include(mystic_coverage)
+# include(MysticCoverage)
 # # Then call the function to enable code coverage:
 # mystic_coverage(<TARGET_NAME>)
 # --------------------------------------------------------------------------------------------------
 
-include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/MysticMessage.cmake")
 
 # --------------------------------------------------------------------------------------------------
 # Function: mystic_coverage

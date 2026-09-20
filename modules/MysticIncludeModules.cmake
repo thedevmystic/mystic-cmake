@@ -13,19 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_include_modules.cmake
+# File: MysticIncludeModules.cmake
 # Description: This CMake module is used to all include modules defined "modules" directory.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
 # License: Apache License 2.0
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file:
-# include(mystic_include_modules)
+# include(MysticIncludeModules)
 # # Then call the function to enable code coverage:
 # mystic_include_modules()
 # --------------------------------------------------------------------------------------------------
 
-include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/MysticMessage.cmake")
 
 # --------------------------------------------------------------------------------------------------
 # Function: mystic_include_modules

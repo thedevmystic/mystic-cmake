@@ -13,14 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_setup_options.cmake
+# File: MysticSetupOptions.cmake
 # Description: This CMake module is used to setup the options for a project.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
 # License: Apache License 2.0
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file:
-# include(mystic_setup_options)
+# include(MysticSetupOptions)
 # # Then call the mystic_project function:
 # mystic_setup_options()
 # --------------------------------------------------------------------------------------------------
@@ -28,7 +28,7 @@
 # have to setup the project using mystic_project() function.
 # --------------------------------------------------------------------------------------------------
 
-include("${CMAKE_CURRENT_LIST_DIR}/private_helpers.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/PrivateHelpers.cmake")
 
 # --------------------------------------------------------------------------------------------------
 # Function: mystic_setup_options

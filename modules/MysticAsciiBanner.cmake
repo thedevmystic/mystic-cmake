@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_ascii_banner.cmake
+# File: MysticAsciiBanner.cmake
 # Description: This CMake module provides a function to display an ASCII banner in the console
 # output during the build process. It can be used to add a visual touch to your CMake build scripts.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
@@ -21,7 +21,7 @@
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file:
-# include(mystic_ascii_banner)
+# include(MysticAsciiBanner)
 # # # Call the function to display the banner:
 # mystic_ascii_banner("Welcome to Mystic Framework")
 # --------------------------------------------------------------------------------------------------

@@ -13,14 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------------------------------
-# File: mystic_project.cmake
+# File: MysticProject.cmake
 # Description: This CMake module is used to simplify the process of a project.
 # Author: thedevmystic (Surya) <thedevmystic@gmail.com>
 # License: Apache License 2.0
 # --------------------------------------------------------------------------------------------------
 # Usage:
 # # Include this module in your CMakeLists.txt file:
-# include(mystic_project)
+# include(MysticProject)
 # # Then call the mystic_project function:
 # mystic_project()
 # # It reads from the project.json file and sets the parameters for the project() command.
@@ -62,8 +62,8 @@
 #   "11", "14", "17", "20", or "23".
 # --------------------------------------------------------------------------------------------------
 
-include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
-include("${CMAKE_CURRENT_LIST_DIR}/private_helpers.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/MysticMessage.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/PrivateHelpers.cmake")
 
 # --------------------------------------------------------------------------------------------------
 # Declare _MYSTIC_PROJECT_PREFIX as an INHERITED directory property.
