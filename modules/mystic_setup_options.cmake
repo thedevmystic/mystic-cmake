@@ -28,7 +28,7 @@
 # have to setup the project using mystic_project() function.
 # --------------------------------------------------------------------------------------------------
 
-include("${CMAKE_CURRENT_LIST_DIR}/helpers.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/private_helpers.cmake")
 
 # --------------------------------------------------------------------------------------------------
 # Function: mystic_setup_options

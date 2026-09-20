@@ -44,7 +44,7 @@
 
 include(FetchContent)
 include("${CMAKE_CURRENT_LIST_DIR}/mystic_message.cmake")
-include("${CMAKE_CURRENT_LIST_DIR}/helpers.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/private_helpers.cmake")
 
 # --------------------------------------------------------------------------------------------------
 # Function: mystic_third_party_config
