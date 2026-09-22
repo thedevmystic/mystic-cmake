@@ -1,0 +1,156 @@
+#!/usr/bin/env python3
+"""
+gen_tidy_deps.py
+
+Reads a P1689 dependency-scan JSON (as produced by `clang-scan-deps
+-format=p1689`) and emits a generated CMake file mapping each source
+file to the full transitive set of module-interface source files it
+imports (directly or indirectly).
+
+This lets a CMake custom_command depend on exactly the module sources
+a given TU actually needs, instead of the whole target.
+
+Usage:
+    gen_tidy_deps.py <p1689.json> <output.cmake> [--target NAME]
+
+Output format (included from mystic_lint()):
+
+    set(_MYSTIC_LINT_TIDY_DEPS_<flattened_source_path> "dep1.cppm;dep2.cppm" CACHE INTERNAL "")
+
+Sources are looked up by their absolute path with all non-alphanumeric
+characters replaced by "_", matching the scheme used in mystic_lint().
+"""
+
+import argparse
+import json
+import re
+import sys
+from pathlib import Path
+
+
+def sanitize(path: str) -> str:
+    """Turn an absolute path into a safe CMake variable name fragment."""
+    return re.sub(r"[^A-Za-z0-9]", "_", str(Path(path).resolve()))
+
+
+def load_rules(p1689_path: Path):
+    with open(p1689_path, "r") as f:
+        data = json.load(f)
+    return data.get("rules", [])
+
+
+def build_graph(rules):
+    """
+    Returns:
+      provides: dict[module_logical_name] -> source_path (the file that
+                exports/provides that module)
+      requires: dict[source_path] -> list[module_logical_name] (modules
+                that source directly imports)
+      output_to_source: dict[primary_output] -> source_path, when the
+                rule doesn't directly carry a "source-path" (some clang
+                versions only give it under "provides"/"requires" entries)
+    """
+    provides = {}
+    requires = {}
+
+    for rule in rules:
+        # Figure out this rule's own source file.
+        source_path = None
+        for p in rule.get("provides", []):
+            if p.get("source-path"):
+                source_path = p["source-path"]
+                if p.get("logical-name"):
+                    provides[p["logical-name"]] = source_path
+
+        # Some rules (e.g. plain TUs with no "provides") only reveal
+        # their source indirectly; fall back to primary-output's stem
+        # matching isn't reliable, so we also accept an explicit
+        # "source-path" if clang-scan-deps ever emits one at rule level
+        if source_path is None:
+            source_path = rule.get("source-path")
+
+        needed = []
+        for r in rule.get("requires", []):
+            name = r.get("logical-name")
+            if name:
+                needed.append(name)
+            # If this "requires" entry itself carries a source-path for
+            # the dependency, register it as a provider too, in case the
+            # defining rule for that module wasn't scanned in this run.
+            if name and r.get("source-path"):
+                provides.setdefault(name, r["source-path"])
+
+        if source_path:
+            requires[source_path] = needed
+
+    return provides, requires
+
+
+def resolve_transitive(source_path, requires, provides, memo, visiting):
+    """
+    Returns the set of source file paths (module interfaces) that
+    `source_path` depends on, transitively, following imports.
+    """
+    if source_path in memo:
+        return memo[source_path]
+
+    if source_path in visiting:
+        # Cyclic import graph shouldn't happen in valid C++ modules,
+        # but don't hang the generator if it does.
+        return set()
+
+    visiting.add(source_path)
+    result = set()
+
+    for module_name in requires.get(source_path, []):
+        dep_source = provides.get(module_name)
+        if dep_source is None:
+            # Unknown provider (e.g. a system/std module, or a module
+            # outside this scan's compilation database). Nothing to
+            # add as a file-level dependency.
+            continue
+        if dep_source == source_path:
+            continue
+        result.add(dep_source)
+        result |= resolve_transitive(dep_source, requires, provides, memo, visiting)
+
+    visiting.discard(source_path)
+    memo[source_path] = result
+    return result
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("p1689_json", type=Path)
+    ap.add_argument("output_cmake", type=Path)
+    ap.add_argument("--target", default="", help="Target name, for a comment header only")
+    args = ap.parse_args()
+
+    if not args.p1689_json.exists():
+        # No scan data yet (first configure). Emit an empty file so the
+        # `include()` in CMake succeeds; callers fall back to coarse
+        # target-level dependencies when no _MYSTIC_LINT_TIDY_DEPS_* var is set.
+        args.output_cmake.write_text(
+            "# mystuc_lint_gen_tidy_deps.py: no scan input found; nothing generated.\n"
+        )
+        return 0
+
+    rules = load_rules(args.p1689_json)
+    provides, requires = build_graph(rules)
+
+    memo = {}
+    lines = [f"# Auto-generated by gen_tidy_deps.py for target: {args.target}",
+             "# Do not edit by hand.\n"]
+
+    for source_path in requires.keys():
+        deps = resolve_transitive(source_path, requires, provides, memo, set())
+        var = f"_MYSTIC_LINT_TIDY_DEPS_{sanitize(source_path)}"
+        dep_list = ";".join(sorted(str(Path(d).resolve()) for d in deps))
+        lines.append(f'set({var} "{dep_list}" CACHE INTERNAL "")')
+
+    args.output_cmake.write_text("\n".join(lines) + "\n")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
