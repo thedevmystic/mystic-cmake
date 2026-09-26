@@ -99,7 +99,7 @@ function(mystic_ascii_banner INPUT_STRING)
   foreach(WORD IN LISTS WORDS)
     string(TOUPPER "${WORD}" WORD_UPPER)
     string(LENGTH "${WORD_UPPER}" WORD_LEN)
-    
+
     if(WORD_LEN EQUAL 0)
       continue()
     endif()
@@ -119,7 +119,7 @@ function(mystic_ascii_banner INPUT_STRING)
       if(CHAR STREQUAL ":")
         set(CHAR "COLON")
       endif()
-      
+
       if(DEFINED _MYSTIC_ASCII_FONT_${CHAR})
         list(GET _MYSTIC_ASCII_FONT_${CHAR} 0 C0)
         list(GET _MYSTIC_ASCII_FONT_${CHAR} 1 C1)

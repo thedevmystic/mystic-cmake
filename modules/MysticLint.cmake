@@ -54,7 +54,7 @@ function(_mystic_find_lint_binaries)
   if(NOT CLANG_FORMAT_EXE)
     mystic_message(WARNING "clang-format not found. Format targets will be no-ops.")
   endif()
-   
+
   if(NOT CLANG_TIDY_EXE)
     mystic_message(WARNING "clang-tidy not found. Lint targets will be no-ops.")
   endif()
@@ -216,7 +216,7 @@ function(_mystic_create_lint_target TARGET_NAME TIDY_ARGS)
   endif()
 
   # Add scanning as custom target so it becomes a build node and can be depended on.
-  add_custom_target("scan_deps_${TARGET_NAME}" 
+  add_custom_target("scan_deps_${TARGET_NAME}"
     DEPENDS "${TIDY_DEPS_CMAKE}"
     COMMENT "Scanning dependencies for target: ${TARGET_NAME}"
   )

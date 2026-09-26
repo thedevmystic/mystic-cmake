@@ -43,7 +43,7 @@ function(mystic_install MAIN_TARGET)
   if(NOT PROJECT_PREFIX)
     mystic_message(FATAL_ERROR "Project prefix not set. Ensure that 'mystic_project' is called before 'mystic_install'.")
   endif()
-  
+
   # If install is disabled, skip installation
   if(NOT ${PROJECT_PREFIX}_INSTALL)
     return()

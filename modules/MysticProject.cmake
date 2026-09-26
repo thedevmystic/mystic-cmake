@@ -30,7 +30,7 @@
 # --------------------------------------------------------------------------------------------------
 
 # --------------------------------------------------------------------------------------------------
-# Valid example of project.json file: 
+# Valid example of project.json file:
 # --------------------------------------------------------------------------------------------------
 # {
 #   "name": "MyProject",
@@ -74,7 +74,7 @@ if(NOT _MYSTIC_PROJECT_PREFIX_PROPERTY_DEFINED)
     BRIEF_DOCS "Constant-case name prefix for the current Mystic project."
     FULL_DOCS "Set by mystic_project() to the CONSTANT_CASE form of the project's name."
               "It is used as a prefix for all project-related variables and is stored as a directory property."
-              "Inherited so subdirectories can retrieve it without re-declaring it."
+              "Inherited so subdirectories can retrieve it without redeclaring it."
   )
   set_property(GLOBAL PROPERTY _MYSTIC_PROJECT_PREFIX_PROPERTY_DEFINED TRUE)
 endif()
